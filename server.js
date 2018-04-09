@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const socketIO = require('socket.io');
+
 
 // Get our API routes
 const api = require('./server/routes/api');
@@ -43,6 +45,19 @@ app.set('port', port);
  * Create HTTP server.
  */
 const server = http.createServer(app);
+
+//SOCKET IO
+const io = socketIO(server);
+
+io.on('connection', (socket) => {
+  console.log('user connected');
+
+  socket.on('new-message', (message) => {
+    console.log(message);
+  });
+
+});
+
 
 
 /**

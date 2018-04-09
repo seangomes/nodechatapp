@@ -1,3 +1,4 @@
-<p>
-  userlist works!
-</p>
+<ul class="list-group" *ngFor="let user of users">
+  <li *ngIf="users.length == 1">Online brugere</li>
+  <li class="list-group-item">{{user.username}}</li>
+</ul>

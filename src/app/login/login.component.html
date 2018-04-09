@@ -1,3 +1,8 @@
-<p>
-  login works!
-</p>
+<h3 class="spaceBar">Udfyld brugernavn for at chatte</h3>
+<form>
+  <div class="form-group">
+    
+    <input [(ngModel)]="username" type="text" class="form-control" placeholder="Udfyld brugernavn">
+  </div>
+  <button (click)="login()" class="btn btn-success">Tilslut</button>
+</form>

@@ -1,20 +1,31 @@
-<!--Chose username section-->
-<section>
-  <app-login></app-login>
-</section>
+<div class="row">
+  <div class="col-11">
+    <div class="container">
+      <!--Chose username section-->
+      <section>
+        <app-login></app-login>
+      </section>
 
-<!--Chat window content-->
-<section>
-  <app-chat></app-chat>
-</section>
+      <br>
+      <br>
 
-<!--User list section-->
-<section>
-  <app-userlist></app-userlist>
-</section>
+      <!--Chat window content-->
+      <section>
+        <app-chat></app-chat>
+      </section>
 
+      <br>
+      <br>
+      <!--Send message Field-->
+      <section>
+        <app-sendmessage></app-sendmessage>
+      </section>
 
-<!--Send message Field-->
-<section>
-  <app-sendmessage></app-sendmessage>
-</section>
+    </div>
+  </div>
+
+  <!--User list section-->
+  <section class="col-1">
+    <app-userlist></app-userlist>
+  </section>
+</div>

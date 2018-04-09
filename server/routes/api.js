@@ -18,4 +18,17 @@ router.get('/messages', (req, res) => {
 
 });
 
+router.get('/users', (req, res) => {
+  let users = [
+    {username: "Lars"},
+    {username: "Per"},
+    {username: "Jannick"},
+    {username: "Luffe"},
+    {username: "Bluff"},
+    {username: "P0ker"},
+  ]
+
+  res.send(users);
+});
+
 module.exports = router;
