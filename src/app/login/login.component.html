@@ -1,8 +1,14 @@
+<div *ngIf="userObj === null">
 <h3 class="spaceBar">Udfyld brugernavn for at chatte</h3>
 <form>
   <div class="form-group">
     
-    <input [(ngModel)]="username" type="text" class="form-control" placeholder="Udfyld brugernavn">
+    <input [(ngModel)]="username" name="username" type="text" class="form-control" placeholder="Udfyld brugernavn">
   </div>
   <button (click)="login()" class="btn btn-success">Tilslut</button>
 </form>
+</div>
+<div *ngIf="userObj !== null">
+<h1 class="text-center spaceBar">Velkommen {{userObj.username}}</h1>
+<button (click)="logout()" class="btn btn-danger btn-sm">Logud</button>
+</div>

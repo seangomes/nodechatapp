@@ -14,7 +14,7 @@ export class SendmessageComponent implements OnInit {
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
-    this.chatService.isLoggedIn().subscribe(user => this.user = user);
+    this.chatService.isUserLoggedIn().subscribe(user => this.user = user);
   }
 
   sendMessage() {
