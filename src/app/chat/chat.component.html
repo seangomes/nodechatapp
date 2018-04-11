@@ -1,7 +1,11 @@
 <div class="card chatContent">
   <div class="card-body">
-    <div *ngFor="let message of messages">
-      <div>{{message.message}}</div>
+    <div *ngFor="let messageObj of messages">
+      <article *ngIf="messageObj">
+        <div class="alert alert-primary" role="alert">
+          {{messageObj?.timestamp}} : {{messageObj?.username}} - {{messageObj?.message}}
+        </div>
+      </article>
     </div>
   </div>
 </div>
