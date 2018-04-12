@@ -2,8 +2,18 @@
   <div class="card-body">
     <div *ngFor="let messageObj of messages">
       <article *ngIf="messageObj">
-        <div class="alert alert-primary" role="alert">
-          {{messageObj?.timestamp}} : {{messageObj?.username}} - {{messageObj?.message}}
+
+        <!--Server sender-->
+        <div *ngIf="messageObj.sender === 'server'">
+        <div class="alert alert-danger" role="alert">
+            {{messageObj?.timestamp}} : {{messageObj?.username}} - {{messageObj?.message}}
+          </div>
+        </div>
+        <!--Client sender-->
+        <div *ngIf="messageObj.sender === 'client'">
+          <div class="alert alert-primary" role="alert">
+            {{messageObj?.timestamp}} : {{messageObj?.username}} - {{messageObj?.message}}
+          </div>
         </div>
       </article>
     </div>

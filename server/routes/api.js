@@ -10,21 +10,24 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 
-
 router.get('/users', (req, res) => {
-  
+  let userList = [];
   User.find({}, function(err, users) {
     console.log("Online Brugere: ", users);
-    res.send(users);
+    users.forEach(user => {
+      userList.push(user);
+    });
+    
+    res.send(userList);
   });
 });
 
-//LOGIN SECTION
 
+//LOGIN SECTION
 /* SAVE Username on login */
 router.post('/login', (req, res) => {
+  
   if(req.body !== undefined){
-
     //check if username exist
     User.find({ 'username': req.body.username }, function (err, docs) {
       if(docs.length === 0) {

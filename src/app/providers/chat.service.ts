@@ -25,7 +25,7 @@ export class ChatService {
 
   private connectedUsersSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
 
-  public connectedUsers$ : Observable<User[]> = this.connectedUsersSubject.asObservable();
+  public connectedUsers$: Observable<User[]> = this.connectedUsersSubject.asObservable();
   public messages$: Observable<Message> = this.messageSubject.asObservable();
 
   constructor(private http: HttpClient) {
@@ -36,9 +36,15 @@ export class ChatService {
     });
 
     this.socket.on('update-onlinelist', (userlist) => {
-      console.log(userlist);
       this.connectedUsersSubject.next(userlist);
-      console.log(this.connectedUsersSubject.getValue());
+    });
+
+
+    //Henter alle aktive brugere i chatten til nyankomne
+    http.get(this.url + 'users').subscribe(data => {
+      if (data) {
+        this.connectedUsersSubject.next(data as User[]);
+      }
     });
   }
 
@@ -62,10 +68,12 @@ export class ChatService {
     if (message) {
       let user = this.userSubject.getValue();
 
-      let messageObj : Message = {
-        username: user.username, 
+      let messageObj: Message = {
+        username: user.username,
         message: message,
-        timestamp: this.genereateTimeStamp()}
+        timestamp: this.genereateTimeStamp(),
+        sender: 'client'
+      }
 
       this.socket.emit('new-message', messageObj);
     }
@@ -92,8 +100,7 @@ export class ChatService {
           this.isLoggedInSubject.next(true);
           localStorage.setItem('user', username);
           //Send emit to socket that we logged in
-          console.log(user);
-          this.socket.emit('user-connected', username);
+          this.socket.emit('user-connected', user);
         }
       })
       return this.userSubject.asObservable();
@@ -110,14 +117,13 @@ export class ChatService {
         this.isLoggedInSubject.next(false);
         this.userSubject.next(user);
         localStorage.removeItem('user');
-        console.log(loggedInUser.username);
         this.socket.emit('left-chat', loggedInUser.username);
       });
     }
   }
 
   //Sætter tiden på message sent
-  genereateTimeStamp() : string {
+  genereateTimeStamp(): string {
     let today = new Date();
     let h = today.getHours();
     let m = today.getMinutes();

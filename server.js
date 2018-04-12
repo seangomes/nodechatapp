@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const socketIO = require('socket.io');
 const mongoose = require('mongoose');
 const colors = require('colors');
+var cors = require('cors')
+
 
 
 
@@ -35,16 +37,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
 
-
+app.use(cors());
 
 // Set our api routes
 app.use('/api', api);
 
-
 // Catch all other routes and return the index file
 
 var jsonParser = bodyParser.json()
-
 
 //MUST BE THE LAST ROUTE BECAUSE OF * NOTATION
 app.get('*', (req, res) => {
@@ -78,25 +78,42 @@ io.on('connection', (socket) => {
   //username connect
   socket.on('user-connected', (data) => {
     onlineUsers.push(data);
-    console.log(data);
-    socket.username = data;
-    console.info(data + ' connected'.green);
+    console.info(data.username + ' connected'.green);
     //adding user til onlinelist
     console.log("Online liste: ".white, onlineUsers.white);
     io.emit('update-onlinelist', onlineUsers);
     
+    let messageFromServer = {
+      username: 'Server',
+      message: data.username + ' har joinet chatten!',
+      timestamp: genereateTimeStamp(),
+      sender: 'server'
+    }
+    io.emit('new-message', messageFromServer);
+
+    
   });
   
   socket.on('left-chat', function(data){
-
+    console.log(data);
     onlineUsers.forEach((user, index) => {
-      if(user = data) {
+      console.log(user.username);
+      if(user.username == data) {
         onlineUsers.splice(index, 1);
+        console.log("Online liste: ".white, onlineUsers.white);
       }
     });
     io.emit('update-onlinelist', onlineUsers);
     console.log(data + ' has left the chat'.red);
-    console.log("Online liste: ".white, onlineUsers.white);
+
+    let messageFromServer = {
+      username: 'Server',
+      message: data + ' har forladt chatten!',
+      timestamp: genereateTimeStamp(),
+      sender: 'server'
+    }
+    io.emit('new-message', messageFromServer);
+
   });
 
   socket.on('disconnect', function(){
@@ -111,7 +128,16 @@ io.on('connection', (socket) => {
 
 });
 
+//Sætter tiden på message sent
+function genereateTimeStamp()  {
+  let today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
 
+  let timestamp = h + ":" + m + ":" + s;
+  return timestamp;
+}
 
 /**
  * Listen on provided port, on all network interfaces.
