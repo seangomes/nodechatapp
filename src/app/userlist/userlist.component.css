@@ -2,6 +2,14 @@
     margin-right: 15px;
 }
 
+.icon-space {
+    margin-right: 5px;
+}
+
 .minHeigth {
     min-height: 740px;
+}
+
+p {
+    font-size: 20px;
 }

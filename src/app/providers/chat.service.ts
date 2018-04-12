@@ -37,6 +37,7 @@ export class ChatService {
 
     this.socket.on('update-onlinelist', (userlist) => {
       this.connectedUsersSubject.next(userlist);
+      console.log(userlist);
     });
 
 
@@ -92,7 +93,11 @@ export class ChatService {
   //LOGIN SECTION
   login(username: string) {
     if (username !== '') {
-      let userObj: User = { "username": username };
+      let userObj : User = {username: username, admin: false};
+      if(username === 'segomes') {
+        userObj.admin = true;
+      }
+      
       this.http.post(this.url + 'login', userObj, httpOptions).subscribe(data => {
         if (data !== 'Brugernavnet er allerede taget. Find et andet!') {
           let user = data as User;

@@ -10,14 +10,19 @@ import { ChatService } from "../providers/chat.service";
 export class ChatComponent implements OnInit {
 
   private messages = [];
+  private currentUser;
 
   constructor(private chatService: ChatService) {
-    console.log(this.messages);
    }
 
   ngOnInit() {
     this.chatService.getAllMessages().subscribe((message : any) => {
       this.messages.push(message);
+    });
+
+    this.chatService.getUser().subscribe(data => {
+      this.currentUser = data;
+      console.log(this.currentUser);
     });
   }
 

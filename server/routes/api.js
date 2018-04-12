@@ -36,7 +36,11 @@ router.post('/login', (req, res) => {
           if (err) {
             return next(err);
           } 
-          let user = {"username": userInfo.username, "oid": userInfo._id};
+          let user = {
+            "username": userInfo.username, 
+            "oid": userInfo._id, 
+            "admin": userInfo.admin          
+          };
           res.json(user);
         });
       }else{

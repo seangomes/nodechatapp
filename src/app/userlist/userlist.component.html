@@ -3,8 +3,30 @@
   <div class="card">
     <div class="card-body minHeigth">
       <ul class="list-group" *ngFor="let user of users">
+        <!--Bruger er admin-->
+        <li class="list-group-item spaceBar">
 
-        <li class="list-group-item spaceBar">{{user?.username}}</li>
+          <div class="row">
+
+            <!--ICON-->
+            <div class="col-2">
+              <i class="fas fa-user icon-space fa-2x" *ngIf="!user?.admin"></i>
+              <i class="fas fa-user-secret icon-space fa-2x" *ngIf="user?.admin"></i>
+            </div>
+
+            <!--USERNAME-->
+            <div class="col-7 text-center">
+              <p>{{user?.username}}</p></div>
+
+            <!--ADMIN BUTTON-->
+            <div class="col-3">
+              <button [hidden]="!currentUser?.admin" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i>
+              </button>
+            </div>
+          </div>
+
+        </li>
       </ul>
     </div>
   </div>

@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   constructor(private chatService: ChatService) {
     this.chatService.getUser().subscribe(user => {
       this.userObj = user;
-      console.log(user);
     });
    }
 

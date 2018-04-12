@@ -64,7 +64,7 @@ app.set('port', port);
 const server = http.createServer(app);
 
 var onlineUsers = [];
-console.log('Online liste START = '.white, onlineUsers);
+console.log('Online liste START = '.blue, onlineUsers);
 
 
 //SOCKET IO
@@ -80,7 +80,7 @@ io.on('connection', (socket) => {
     onlineUsers.push(data);
     console.info(data.username + ' connected'.green);
     //adding user til onlinelist
-    console.log("Online liste: ".white, onlineUsers.white);
+    console.log("Online liste: ".blue, onlineUsers.white);
     io.emit('update-onlinelist', onlineUsers);
     
     let messageFromServer = {
@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
       console.log(user.username);
       if(user.username == data) {
         onlineUsers.splice(index, 1);
-        console.log("Online liste: ".white, onlineUsers.white);
+        console.log("Online liste: ".blue, onlineUsers.white);
       }
     });
     io.emit('update-onlinelist', onlineUsers);
