@@ -20,7 +20,7 @@
 
             <!--ADMIN BUTTON-->
             <div class="col-3">
-              <button [hidden]="!currentUser?.admin" class="btn btn-danger">
+              <button [hidden]="!currentUser?.admin" class="btn btn-danger" (click)="kickUser(user)">
                 <i class="fas fa-sign-out-alt"></i>
               </button>
             </div>

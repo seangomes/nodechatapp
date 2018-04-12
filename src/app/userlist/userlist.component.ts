@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../providers/chat.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-userlist',
@@ -25,8 +26,12 @@ export class UserlistComponent implements OnInit {
 
   ngOnInit() {
     this.chatService.getConnectedUsers().subscribe(data => this.users = data);
-  
+
     this.chatService.getUser().subscribe(data => this.currentUser = data);
+  }
+
+  kickUser(user: User) {
+    this.chatService.kickUser(user);
   }
 
 }

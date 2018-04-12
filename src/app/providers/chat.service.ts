@@ -97,7 +97,7 @@ export class ChatService {
       if(username === 'segomes') {
         userObj.admin = true;
       }
-      
+
       this.http.post(this.url + 'login', userObj, httpOptions).subscribe(data => {
         if (data !== 'Brugernavnet er allerede taget. Find et andet!') {
           let user = data as User;
@@ -125,6 +125,13 @@ export class ChatService {
         this.socket.emit('left-chat', loggedInUser.username);
       });
     }
+  }
+
+  kickUser(user: User) : void {
+    this.http.post(this.url+"/kicked", {user}).subscribe(data => {
+      this.removeUserFromList(data as User);
+      console.log(this.connectedUsersSubject.getValue());
+    });
   }
 
   //Sætter tiden på message sent
